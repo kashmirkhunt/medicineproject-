@@ -13,18 +13,20 @@ function Listitem(props) {
     
 
   const localData = () => {
-    let localData = JSON.parse(localStorage.getItem("booklist"));
+    let localData = JSON.parse(localStorage.getItem("booklist")); 
+    if(localData !== null) {
+      setdata(localData);
+    }
 
-    setdata(localData);
+   
   }
 
    const  handledelet = (id) => {
           
-        let localData= JSON.parse( localStorage.getItem('booklist')) ; 
+        let localData = JSON.parse( localStorage.getItem('booklist')) ; 
          let ddata= localData.filter( (l,i) =>l.id!==id)
          localStorage.setItem("booklist", JSON.stringify(ddata));
-
-       localData();
+         localData()
 
         // console.log(localData,idata);
     

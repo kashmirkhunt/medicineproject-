@@ -30,6 +30,30 @@ function Booklist(props) {
     history.push("/listapoinment");
   };
 
+      // CAN YOU HANDLEUPDATE DATA
+      
+      const handleupdatedata = (values) => { 
+          let  localData=  JSON.parse( localStorage.getItem("booklist"));
+          // console.log(localData);
+
+          let udata = localData.map( (l) => {
+             if (l.id === values.id) 
+                  {
+                    return values
+                  }
+                  else{
+                     return l
+                  } 
+                 
+          })  
+           localStorage.setItem("booklist" ,JSON.stringify(udata));
+           setupdate(false);
+           formik.resetForm();
+           history.push("/listapoinment");
+
+           console.log(udata);
+         
+      }
 
   useEffect(() => {
     if (props.location.state) { 
@@ -65,7 +89,12 @@ function Booklist(props) {
     initialValues: initVal,
     validationSchema: schema,
     onSubmit: (values) => {
-      handleInsert(values)
+        if(update) {
+           handleupdatedata(values)
+        }
+        else {
+          handleInsert(values)
+        }
 
 
     }
@@ -108,7 +137,7 @@ function Booklist(props) {
                   placeholder="Your Name"
                   error={Boolean(errors.name && touched.name)}
                   errorMessage={errors.name}
-                  value={values.name}
+                   value={values.name}
                   onBlur={handleBlur}
                   onChange={handleChange}
 
