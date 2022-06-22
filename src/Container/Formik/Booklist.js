@@ -35,7 +35,7 @@ function Booklist(props) {
     //  history.push("/listapoinment");
 
   
-    history.push("/listapoinment")
+    history.push("/listapoinment");
 
   }; 
     useEffect ( () => { 
