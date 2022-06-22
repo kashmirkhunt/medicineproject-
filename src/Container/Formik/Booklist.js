@@ -1,5 +1,5 @@
 import { Formik, Form, useFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import Inputbox from '../../Componets/Inputbox/Inputbox';
 import * as yup from 'yup';
@@ -7,23 +7,19 @@ import * as yup from 'yup';
 
 
 function Booklist(props) {
-  console.log(props.location.state.id);
+  // console.log(props.location.state.id);
 
+  // const [update, setupdate] = useState(false);
+  const [update,setupdate]= useState(false);
 
   const history = useHistory();
 
-  const handleInsert = (values) => { 
-     
-    let idata={
-      id :Math.floor(Math.random()*1000),
-     ...values
-   }
-    // console.log(idata);
-
-
-
+  const handleInsert = (values) => {
+    let idata = {
+      id: Math.floor(Math.random() * 1000),
+      ...values
+    }
     let localdata = JSON.parse(localStorage.getItem("booklist"));
-
     if (localdata === null) {
       localStorage.setItem("booklist", JSON.stringify([idata]));
     }
@@ -31,21 +27,18 @@ function Booklist(props) {
       localdata.push(idata);
       localStorage.setItem("booklist", JSON.stringify(localdata));
     }
-
-    //  history.push("/listapoinment");
-
-  
     history.push("/listapoinment");
+  };
 
-  }; 
-    useEffect ( () => { 
-      let localData=JSON.parse(localStorage.getItem('booklist'));
-      console.log(localData); 
-      let fdata =localData.filter( (l) => l.id ===props.location.state.id);
 
+  useEffect(() => {
+    if (props.location.state) { 
+      let localData = JSON.parse(localStorage.getItem('booklist'));
+      let fdata = localData.filter((l) => l.id === props.location.state.id);
       formik.setValues(fdata[0]);
-
-    },[])
+      setupdate(true);
+    }
+  }, [])
   let appoinment = {
     name: yup.string().required(" enter your name ? "),
     email: yup.string().required(' enter your email ? ').email('enter valid email'),
@@ -77,8 +70,8 @@ function Booklist(props) {
 
     }
   })
-  const { handleSubmit, errors, handleChange, touched, handleBlur,values } = formik;
- 
+  const { handleSubmit, errors, handleChange, touched, handleBlur, values } = formik;
+
 
 
   return (
@@ -148,7 +141,7 @@ function Booklist(props) {
                   errorMessage={errors.phone}
                   onChange={handleChange}
                   value={values.phone}
-                   
+
                   onBlur={handleBlur}
 
                 />
@@ -172,7 +165,7 @@ function Booklist(props) {
               </div>
               <div className="col-md-4 form-group mt-3">
                 <Inputbox type="select" name="department" id="department" className="form-select" error={Boolean(errors.department)}
-                  errorMessage={errors.department}    value={values.department} onChange={handleChange} onBlur={handleBlur}>
+                  errorMessage={errors.department} value={values.department} onChange={handleChange} onBlur={handleBlur}>
                   <option value>Select Department</option>
                   <option value="Department 1">Department 1</option>
                   <option value="Department 2">Department 2</option>
@@ -196,7 +189,13 @@ function Booklist(props) {
               {/* <div className="error-message" /> */}
               <div className="sent-message">Your appointment request has been sent successfully. Thank you!</div>
             </div>
-            <div className='text-center'><button type='submit' className="text-center appointment-btn text-center" >maker an appoinment</button></div>
+            {
+              update ? (<div className='text-center'><button type='submit' className="text-center appointment-btn text-center" >update  an appoinment</button></div>)
+
+                :
+                (<div className='text-center'><button type='submit' className="text-center appointment-btn text-center" >maker an appoinment</button></div>)
+            }
+
           </Form>
         </Formik>
 

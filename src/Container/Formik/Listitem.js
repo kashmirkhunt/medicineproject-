@@ -7,20 +7,22 @@ import { ButtonToggle } from 'reactstrap';
 function Listitem(props) {
 
   const [data, setdata] = useState([]); 
+
    
    let history =useHistory();
     
 
   const localData = () => {
-    let localData = JSON.parse(localStorage.getItem(("booklist")));
+    let localData = JSON.parse(localStorage.getItem("booklist"));
 
     setdata(localData);
   }
 
    const  handledelet = (id) => {
+          
         let localData= JSON.parse( localStorage.getItem('booklist')) ; 
-         let idata= localData.filter( (l,i) =>l.id!==id)
-         localStorage.setItem("booklist", JSON.stringify(idata));
+         let ddata= localData.filter( (l,i) =>l.id!==id)
+         localStorage.setItem("booklist", JSON.stringify(ddata));
 
        localData();
 
