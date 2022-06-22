@@ -47,9 +47,9 @@ function Booklist(props) {
                  
           })  
            localStorage.setItem("booklist" ,JSON.stringify(udata));
+           history.push("/listapoinment");
            setupdate(false);
            formik.resetForm();
-           history.push("/listapoinment");
 
            console.log(udata);
          
@@ -93,7 +93,7 @@ function Booklist(props) {
            handleupdatedata(values)
         }
         else {
-          handleInsert(values)
+           handleInsert(values)
         }
 
 
@@ -219,10 +219,10 @@ function Booklist(props) {
               <div className="sent-message">Your appointment request has been sent successfully. Thank you!</div>
             </div>
             {
-              update ? (<div className='text-center'><button type='submit' className="text-center appointment-btn text-center" >update  an appoinment</button></div>)
+              update ? <div className='text-center'><button type='submit' className="text-center appointment-btn text-center" >update  an appoinment</button></div>
 
                 :
-                (<div className='text-center'><button type='submit' className="text-center appointment-btn text-center" >maker an appoinment</button></div>)
+                <div className='text-center'><button type='submit' className="text-center appointment-btn text-center" >maker an appoinment</button></div>
             }
 
           </Form>
